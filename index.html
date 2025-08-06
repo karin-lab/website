@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Computation in Living Systems</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+        /* Custom styles for hero section background */
+        .hero {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/Actiniaria.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+        /* Map styling */
+        .map-container {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+<!-- Hero Section -->
+<header class="hero min-h-[60vh] flex items-center text-white">
+<div class="container mx-auto px-4 md:pl-8">
+  <h1 class="text-4xl md:text-5xl font-bold mb-4 max-w-3xl">Computation in Living Systems</h1>
+  <p class="text-lg md:text-xl max-w-2xl">The Research Group of Omer Karin at Imperial College London</p>
+</div>
+</header>
+<!-- Navigation -->
+<nav class="bg-gray-800 text-white sticky top-0 z-10 shadow-lg">
+<ul class="flex flex-wrap justify-center space-x-4 md:space-x-6 py-4">
+<li><a class="hover:text-blue-400 transition" href="#home">Home</a></li>
+<li><a class="hover:text-blue-400 transition" href="#research">Research</a></li>
+<li><a class="hover:text-blue-400 transition" href="#group">Group</a></li>
+<li><a class="hover:text-blue-400 transition" href="#publications">Publications</a></li>
+<li><a class="hover:text-blue-400 transition" href="#opportunities">Join Us</a></li>
+<li><a class="hover:text-blue-400 transition" href="#contact">Contact</a></li>
+</ul>
+</nav>
+<!-- Home Section -->
+<section class="py-16 bg-white" id="home">
+<div class="container mx-auto px-4">
+<h2 class="text-3xl font-bold text-gray-800 mb-6">Welcome</h2>
+<p class="text-lg text-gray-600 leading-relaxed max-w-8xl">Our research group develops mathematical and computational models to understand biological mechanisms, focusing on epigenetic and cellular dynamics. We are affiliated with the Biomathematics Group at Imperial College London's South Kensington campus.</p>
+
+<h3 class="text-2xl font-bold text-gray-700 mt-8 mb-4">What do we do?</h3>
+<p class="text-lg text-gray-600 leading-relaxed max-w-8xl">Living systems operate in ways that are fundamentally different from human-made machines. A cell's most important decisions, such as when to divide or what type of cell to become, result from processes based on noisy interactions between many types of molecules. Our group develops new mathematical approaches to make sense of these processes. We use tools and concepts from a wide range of fields, including statistical physics, nonlinear dynamics, and computation, while working closely with experimental data.</p>
+</div>
+</section>
+<!-- Research Section -->
+<section class="py-16 bg-gray-100" id="research">
+<div class="container mx-auto px-4">
+<h2 class="text-3xl font-bold text-gray-800 mb-6">Research</h2>
+<div class="grid md:grid-cols-2 gap-8">
+<div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+        <img src="images/enhancernet.png" alt="Cell Identity Dynamics" class="w-full h-48 object-cover rounded-t-lg mb-4">
+        <h3 class="text-xl font-semibold text-grey-800 mb-3">Cell Identity Dynamics</h3>
+        <p class="text-grey-600 leading-relaxed">The evolution of multicellular organisms depends on the differentiation of genetically identical cells into specialised types. We develop coarse-graining methods to model these dynamics and establish mechanistic links with associative memory networks, aiming to formulate a general theory of cell identity dynamics.</p>
+        <p class="mt-4">
+        Relevant publications:
+          <p><a href="https://arxiv.org/abs/2412.11336" class="text-blue-600 hover:underline">Hierarchical cell identities emerge from animal gene regulatory mechanisms</a></p>
+          <p><a href="https://journals.biologists.com/dev/article/151/19/dev202997/362293/EnhancerNet-a-predictive-model-of-cell-identity" class="text-blue-600 hover:underline">EnhancerNet: a predictive model of cell identity dynamics through enhancer selection</a></p>
+        </p>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+        <img src="images/epigenetics_website.png" alt="Memory" class="w-full h-48 object-cover rounded-t-lg mb-4">
+        <h3 class="text-xl font-semibold text-grey-800 mb-3">Computation and Learning in Biological Memory Systems</h3>
+        <p class="text-grey-600 leading-relaxed">Many biological systems, such as the adaptive immune system and epigenetic gene silencing, rely on long-term memory. We are developing theoretical approaches to study how the combination of stochastic production and competition between memory units shapes memory repertoires.</p>
+        <p class="mt-4">
+        Relevant publications:
+          <p><a href="https://pubmed.ncbi.nlm.nih.gov/36657390" class="text-blue-600 hover:underline">Epigenetic inheritance of gene silencing is maintained by a self-tuning mechanism based on resource competition</a></p>
+          <p><a href="https://www.cell.com/immunity/fulltext/S1074-7613(24)00081-5" class="text-blue-600 hover:underline">Tuning of plasma cell lifespan by competition explains the longevity and heterogeneity of antibody persistence</a></p>
+        </p>
+      </div>
+<div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+<h3 class="text-xl font-semibold text-gray-800 mb-3">Movement Regulation</h3>
+<img src="images/taxis.png" alt="Taxis" class="w-full h-48 object-cover rounded-t-lg mb-4">
+<p class="text-gray-600 leading-relaxed">We are interested in understanding the principles underlying biological circuits that control movement, drawing connections with reinforcement learning and sampling algorithms.</p>
+<p class="mt-4">
+Relevant publications:
+<p><a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1010340" class="text-blue-600 hover:underline">The dopamine circuit as a reward-taxis navigation system.</a></p>
+<p><a href="https://www.cell.com/iscience/fulltext/S2589-0042(21)00718-X" class="text-blue-600 hover:underline">Temporal fluctuations in chemotaxis gain implement a simulated-tempering strategy for efficient navigation in complex environments.</a></p>
+</p>
+</div>
+<div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+<h3 class="text-xl font-semibold text-gray-800 mb-3">Systems Medicine and Ageing</h3>
+<img src="images/vaccine.png" alt="Systems Medicine" class="w-full h-48 object-cover rounded-t-lg mb-4">
+<p class="text-gray-600 leading-relaxed">We develop mathematical models of physiological circuits to understand how diseases arise from the dysregulation of dynamical mechanisms over long timescales, including models for biological ageing.</p>
+<p class="mt-4">
+Relevant publications:
+<p><a href="https://www.cell.com/immunity/fulltext/S1074-7613(24)00081-5" class="text-blue-600 hover:underline">Tuning of plasma cell lifespan by competition explains the longevity and heterogeneity of antibody persistence</a></p>
+<p><a href="https://www.embopress.org/doi/full/10.15252/msb.20209510" class="text-blue-600 hover:underline">A new model for the HPA axis explains dysregulation of stress hormones on the timescale of weeks.</a></p>
+<p><a href="https://www.nature.com/articles/s41467-019-13192-4" class="text-blue-600 hover:underline">Senescent cell turnover slows with age providing an explanation for the Gompertz law.</a></p>
+<p><a href="https://onlinelibrary.wiley.com/doi/full/10.1111/acel.13314" class="text-blue-600 hover:underline">Senescent cells and the incidence of age-related diseases.</a></p>
+</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Group Section -->
+<section class="py-16 bg-white" id="group">
+<div class="container mx-auto px-4">
+<h2 class="text-3xl font-bold text-gray-800 mb-6">Our Group</h2>
+<div class="grid md:grid-cols-3 gap-8">
+<div class="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition text-center">
+<img alt="Omer Karin" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover" src="images/photo_OK.jpg"/>
+<h3 class="text-xl font-semibold text-gray-800 mb-2">Omer Karin</h3>
+<p class="text-gray-600 mb-3">Assistant Professor</p>
+</div>
+<div class="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition text-center">
+<img alt="Anton Grishechkin" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover" src="images/anton.jpg"/>
+<h3 class="text-xl font-semibold text-gray-800 mb-2">Anton Grishechkin</h3>
+<p class="text-gray-600 mb-3">PhD Student</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Publications Section -->
+<section class="py-16 bg-white" id="publications">
+<div class="container mx-auto px-4">
+<h2 class="text-3xl font-bold text-gray-800 mb-6">Publications</h2>
+<p class="text-lg text-gray-600">A comprehensive list of our publications is available on <a class="text-blue-600 hover:underline" href="https://scholar.google.com/citations?hl=en&user=dg7qorcAAAAJ&view_op=list_works&sortby=pubdate">Omer's Google Scholar page</a>.</p>
+</div>
+</section>
+<!-- Opportunities Section -->
+<section class="py-16 bg-gray-100" id="opportunities">
+<div class="container mx-auto px-4">
+<h2 class="text-3xl font-bold text-gray-800 mb-6">Join Us</h2>
+<p class="text-lg text-gray-600 mb-8">We are always looking for motivated individuals to join our team. Several funding mechanisms are available.</p>
+<div class="grid md:grid-cols-2 gap-8">
+<div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+<h3 class="text-xl font-semibold text-gray-800 mb-3">Postdoctoral Researchers</h3>
+<p class="text-gray-600 leading-relaxed">The college offers several open positions for postdoctoral fellowships. Below is a list of opportunities. Please follow the provided links for official deadlines and application information.</p>
+
+<p class="mt-4"><a href="https://www.imperial.ac.uk/mathematics/research/opportunities/chapman-fellowships/" class="text-blue-600 hover:underline font-semibold">Chapman Fellowships</a></p>
+<p class="text-gray-600 leading-relaxed">A 2-year independent fellowship with teaching duties. Applications typically open annually around September.</p>
+
+<p class="mt-4 font-semibold">Chapman-Schmidt AI in Science Postdoctoral Fellows</p>
+<p class="text-gray-600 leading-relaxed">A 2-year fellowship for researchers applying AI to science. Links:
+<a href="https://www.imperial.ac.uk/jobs//search-internal/description/index.php?jobId=24768&jobTitle=Chapman-Schmidt+AI+in+Science+Postdoctoral+Fellows%2C+a+program+of+Schmidt+Sciences+%28Research+Associate%29" class="text-blue-600 hover:underline">Associate</a> |
+<a href="https://www.imperial.ac.uk/jobs//search-internal/description/index.php?jobId=24772&jobTitle=Chapman-Schmidt+AI+in+Science+Postdoctoral+Fellows%2C+a+program+of+Schmidt+Sciences+%28Research+Fellow%29" class="text-blue-600 hover:underline">Fellow</a>.
+</p>
+
+<p class="mt-4 font-semibold">Eric and Wendy Schmidt AI in Science Postdoctoral Fellows</p>
+<p class="text-gray-600 leading-relaxed">A 2-year fellowship to use AI for advancing science or engineering. Links:
+<a href="https://www.imperial.ac.uk/jobs//search-internal/description/index.php?jobId=24779&jobTitle=Eric+and+Wendy+Schmidt+AI+in+Science+Postdoctoral+Fellows%2C+a+program+of+Schmidt+Sciences+%281+Year+Linked+Fellowship+with+AIMS+South+Africa%29+" class="text-blue-600 hover:underline">Associate</a> |
+<a href="https://www.imperial.ac.uk/jobs//search-internal/description/index.php?jobId=24772&jobTitle=Chapman-Schmidt+AI+in+Science+Postdoctoral+Fellows%2C+a+program+of+Schmidt+Sciences+%28Research+Fellow%29" class="text-blue-600 hover:underline">Fellow</a>.
+</p>
+
+<p class="mt-4"><a href="https://www.imperial.ac.uk/jobs//search-internal/description/index.php?jobId=24779&jobTitle=Eric+and+Wendy+Schmidt+AI+in+Science+Postdoctoral+Fellows%2C+a+program+of+Schmidt+Sciences+%281+Year+Linked+Fellowship+with+AIMS+South+Africa%29+" class="text-blue-600 hover:underline font-semibold">Eric and Wendy Schmidt AI in Science Fellowship (Linked with AIMS South Africa)</a></p>
+<p class="text-gray-600 leading-relaxed">A 1-year fellowship at Imperial College with a linked 1-year appointment at AIMS South Africa.</p>
+
+<p class="text-gray-600 leading-relaxed mt-4">I am also happy to support candidates in their applications for external fellowships, such as Marie Curie, EMBO, and HFSP. Please get in touch to discuss potential projects.</p>
+
+</div>
+<div>
+    <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition mb-8">
+        <h3 class="text-xl font-semibold text-gray-800 mb-3">PhD Students</h3>
+        <p class="text-gray-600 leading-relaxed">We have competitive funding for PhD positions. If you're thinking about joining us, it's a good idea to reach out early. Please <a href="#contact" class="text-blue-600 hover:underline">contact me</a> with your CV and a short summary of your interests to chat about possible projects.</p>
+    </div>
+    <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+        <h3 class="text-xl font-semibold text-gray-800 mb-3">Undergraduate/Masters Students</h3>
+        <p class="text-gray-600 leading-relaxed">We welcome applications from Imperial students for M3R, M4R, MSc, and UROP research projects. If you are interested in joining us, please <a href="#contact" class="text-blue-600 hover:underline">get in touch</a> to discuss potential opportunities.</p>
+    </div>
+</div>
+</div>
+</div>
+</section>
+<!-- Contact Section -->
+<section class="py-16 bg-white" id="contact">
+<div class="container mx-auto px-4">
+<h2 class="text-3xl font-bold text-gray-800 mb-6">Contact Us</h2>
+<p class="text-lg text-gray-600 mb-8">Our group is located at the Department of Mathematics, Imperial College London, UK.</p>
+<div class="grid md:grid-cols-2 gap-8">
+<div class="bg-gray-50 p-6 rounded-lg shadow-md">
+<h3 class="text-xl font-semibold text-gray-800 mb-4">Our Location</h3>
+<div class="space-y-2 text-gray-600">
+<p>6M12 Huxley Building</p>
+<p>South Kensington Campus</p>
+<p>London SW7 2AZ, UK</p>
+</div>
+<div class="mt-4">
+<p class="text-gray-800 font-medium">Email:</p>
+<p class="text-gray-600">o.karin [at] imperial.ac.uk</p>
+</div>
+</div>
+<div class="bg-gray-50 p-6 rounded-lg shadow-md">
+<h3 class="text-xl font-semibold text-gray-800 mb-4">Find Us</h3>
+<div class="map-container">
+<iframe allowfullscreen="" height="200" loading="lazy" src="https://maps.google.com/maps?q=Huxley%20Building%20Imperial%20College%20London&t=&z=15&ie=UTF8&iwloc=&output=embed" style="border:0;" width="100%"></iframe>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-gray-800 text-white text-center py-6">
+<p class="text-gray-300">© 2025 Computation in Living Systems | Hosted on GitHub Pages</p>
+</footer>
+</body>
+</html>
