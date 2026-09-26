@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <title>Omer Karin · Imperial College London</title>
+    <title>Omer Karin</title>
     <meta name="description" content="Omer Karin's research group at Imperial College London develops mathematical theories of biological mechanisms, focusing on epigenetic and cellular dynamics.">
     <meta name="theme-color" content="#ffffff">
     <link rel="icon" href="data:,">
@@ -88,6 +88,9 @@
         .pubs li > a:hover { color: var(--accent); }
         .pubs .authors, .pubs .venue { display: block; font: .85rem/1.5 var(--sans); color: var(--muted); }
         .pubs .venue { color: var(--faint); }
+        [hidden] { display: none !important; }
+        .more { margin-top: 1.25rem; min-height: 2.75rem; padding: 0 1.1rem; border: 1px solid var(--line); border-radius: 3px; background: var(--bg); color: var(--muted); font: 500 .85rem/1 var(--sans); cursor: pointer; }
+        .more:hover, .more:focus-visible { color: var(--ink); border-color: var(--faint); }
 
         /* Join & contact */
         #join h4 { font-size: 1.05rem; font-weight: 600; margin: 1rem 0 .25rem; }
@@ -223,6 +226,7 @@
         <ol class="pubs">
           <li data-themes="M H"><a href="https://doi.org/10.15252/msb.20167216">Dynamical compensation in physiological circuits</a><span class="authors"><b>O Karin</b>, A Swisa, B Glaser, Y Dor, U Alon</span><span class="venue"><i>Molecular Systems Biology</i></span></li>
         </ol>
+            <button class="more" type="button" hidden>Show all publications</button>
         </div>
     </section>
 
@@ -322,6 +326,22 @@
                     sup.appendChild(tag);
                 });
                 li.firstElementChild.after(sup);
+            });
+        })();
+
+        // Shows only the newest publications until "Show all publications" is pressed.
+        (function () {
+            var SHOW = 5, items = document.querySelectorAll('.pubs li'), btn = document.querySelector('.more');
+            if (items.length <= SHOW) return;
+            items.forEach(function (li, i) { li.hidden = i >= SHOW; });
+            document.querySelectorAll('.pubs').forEach(function (ol) {
+                if (!ol.querySelector('li:not([hidden])')) ol.hidden = ol.previousElementSibling.hidden = true;
+            });
+            btn.hidden = false;
+            btn.addEventListener('click', function () {
+                document.querySelectorAll('#publications [hidden]').forEach(function (el) { el.hidden = false; });
+                btn.hidden = true;
+                items[SHOW].querySelector('a').focus({ preventScroll: true });
             });
         })();
     </script>
