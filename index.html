@@ -1,237 +1,329 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Computation in Living Systems</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Omer Karin · Imperial College London</title>
+    <meta name="description" content="Omer Karin's research group at Imperial College London develops mathematical theories of biological mechanisms, focusing on epigenetic and cellular dynamics.">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="icon" href="data:,">
     <style>
-        /* Custom styles for hero section background */
-        .hero {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/Actiniaria.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+        :root {
+            --ink: #1b1b1b;
+            --muted: #555555;
+            --faint: #7a7a7a;
+            --line: #e6e3dd;
+            --bg: #ffffff;
+            --accent: #1d4e89;
+            --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+            --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --gutter: max(1.25rem, env(safe-area-inset-left), env(safe-area-inset-right));
         }
-        /* Smooth scroll behavior */
-        html {
-            scroll-behavior: smooth;
+        *, *::before, *::after { box-sizing: border-box; }
+        html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+        body { margin: 0; background: var(--bg); color: var(--ink); font: 400 1.0625rem/1.65 var(--serif); overflow-wrap: break-word; }
+        img { max-width: 100%; height: auto; display: block; }
+        a { color: var(--accent); text-decoration: none; }
+        a:hover, a:focus-visible { text-decoration: underline; text-underline-offset: .15em; }
+        h2, h3, h4 { margin: 0; line-height: 1.3; }
+        p { margin: 0 0 1rem; }
+        .wrap { max-width: 52rem; margin: 0 auto; padding: 0 var(--gutter); }
+        .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+        /* Navigation: centred when it fits, scrolls sideways when it doesn't */
+        nav { position: sticky; top: 0; z-index: 10; background: var(--bg); border-bottom: 1px solid var(--line); padding: env(safe-area-inset-top) env(safe-area-inset-right) 0 env(safe-area-inset-left); }
+        nav ul { display: flex; margin: 0; padding: 0 .5rem; list-style: none; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+        nav ul::-webkit-scrollbar { display: none; }
+        nav li:first-child { margin-left: auto; }
+        nav li:last-child { margin-right: auto; }
+        nav a { display: block; padding: 1rem .5rem; color: var(--muted); font: 500 .72rem/1 var(--sans); letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; }
+        nav a:hover, nav a:focus-visible { color: var(--ink); text-decoration: none; }
+
+        /* Illustration strip */
+        .band { height: clamp(7rem, 19vw, 14rem); overflow: hidden; background: #d9d3c4; border-bottom: 1px solid var(--line); }
+        .band img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 60%; }
+
+        /* Sections */
+        section { padding: 2.75rem 0; scroll-margin-top: 3rem; }
+        section + section { border-top: 1px solid var(--line); }
+        h2 { font-size: 1.55rem; font-weight: 600; margin-bottom: 1.25rem; }
+        h3 { font-size: 1.15rem; font-weight: 600; margin: 2rem 0 .75rem; }
+        .muted { color: var(--muted); }
+        .lead { font-size: 1.2rem; line-height: 1.55; margin-bottom: 1.25rem; }
+        #about p:not(.lead) { color: var(--muted); }
+
+        /* Group */
+        .people { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.75rem 1rem; }
+        .person { text-align: center; }
+        .avatar { width: 5.5rem; height: 5.5rem; margin: 0 auto .75rem; border-radius: 50%; object-fit: cover; background: #ece9e3; color: var(--faint); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+        .person h3 { font: 600 .95rem/1.3 var(--sans); margin: 0 0 .2rem; }
+        .person p { font: .85rem/1.4 var(--sans); color: var(--muted); margin: 0; }
+        .alumni { list-style: none; margin: 0; padding: 0; }
+        .alumni li { display: flex; align-items: center; gap: .75rem; padding: .25rem 0; font: .95rem/1.4 var(--sans); }
+        .alumni img { width: 2.75rem; height: 2.75rem; border-radius: 50%; object-fit: cover; }
+        .alumni span { color: var(--muted); }
+
+        /* Publications */
+        .theme-key { display: flex; flex-wrap: wrap; gap: .35rem 1.1rem; margin: 0 0 .5rem; padding: 0; list-style: none; font: .85rem/1.4 var(--sans); color: var(--muted); }
+        .theme-key li { display: inline-flex; align-items: center; gap: .4rem; }
+        .tag { display: inline-block; min-width: 1.35em; padding: 0 .3em; border-radius: .25em; background: var(--c, #777); color: #fff; font: 700 .68rem/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; text-align: center; }
+        sup.tags { margin-left: .3em; white-space: nowrap; }
+        sup.tags .tag + .tag { margin-left: .15em; }
+        [data-k="M"] { --c: #b91c1c; }
+        [data-k="B"] { --c: #0f766e; }
+        [data-k="I"] { --c: #7e22ce; }
+        [data-k="D"] { --c: #a16207; }
+        [data-k="E"] { --c: #15803d; }
+        [data-k="N"] { --c: #be185d; }
+        [data-k="L"] { --c: #c2410c; }
+        [data-k="A"] { --c: #1d4ed8; }
+        [data-k="T"] { --c: #475569; }
+        [data-k="H"] { --c: #0369a1; }
+        [data-k="G"] { --c: #4338ca; }
+        [data-k="S"] { --c: #78350f; }
+        .pub-year { font: 600 .78rem/1 var(--sans); letter-spacing: .09em; text-transform: uppercase; color: var(--faint); margin: 2.25rem 0 .25rem; padding-bottom: .5rem; border-bottom: 1px solid var(--line); }
+        .pubs { list-style: none; margin: 0; padding: 0; }
+        .pubs li { padding: .7rem 0; }
+        .pubs li > a { color: var(--ink); font-size: 1.05rem; line-height: 1.45; }
+        .pubs li > a:hover { color: var(--accent); }
+        .pubs .authors, .pubs .venue { display: block; font: .85rem/1.5 var(--sans); color: var(--muted); }
+        .pubs .venue { color: var(--faint); }
+
+        /* Join & contact */
+        #join h4 { font-size: 1.05rem; font-weight: 600; margin: 1rem 0 .25rem; }
+        #join h3 + h4 { margin-top: 0; }
+        #join p { color: var(--muted); }
+        .contact { display: grid; gap: 1.5rem; }
+        .contact h3 { margin-top: 0; }
+        .contact p { color: var(--muted); }
+        .map { width: 100%; height: 14rem; border: 1px solid var(--line); border-radius: 3px; display: block; }
+
+        footer { border-top: 1px solid var(--line); color: var(--faint); text-align: center; padding: 1.5rem var(--gutter) calc(1.5rem + env(safe-area-inset-bottom)); font: .8rem/1.4 var(--sans); }
+
+        @media (min-width: 40rem) {
+            section { padding: 3.5rem 0; }
+            .lead { font-size: 1.35rem; }
+            .people { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+            .avatar { width: 7rem; height: 7rem; font-size: 1.9rem; }
+            .contact { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.5rem; }
+            nav a { padding: 1.1rem .9rem; font-size: .78rem; letter-spacing: .09em; }
         }
-        /* Map styling */
-        .map-container {
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            overflow: hidden;
-        }
+        @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
     </style>
 </head>
-<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+<body>
 
-    <header class="hero min-h-[60vh] flex items-center text-white">
-        <div class="container mx-auto px-4 md:pl-8">
-            <h1 class="text-4xl md:text-5xl font-bold mb-4 max-w-3xl">Computation in Living Systems</h1>
-            <p class="text-lg md:text-xl max-w-2xl">The Research Group of Omer Karin at Imperial College London</p>
-        </div>
-    </header>
-
-    <nav class="bg-gray-800 text-white sticky top-0 z-10 shadow-lg">
-        <ul class="flex flex-wrap justify-center space-x-4 md:space-x-6 py-4">
-            <li><a class="hover:text-blue-400 transition" href="#home">Home</a></li>
-            <li><a class="hover:text-blue-400 transition" href="#research">Research</a></li>
-            <li><a class="hover:text-blue-400 transition" href="#group">Group</a></li>
-            <li><a class="hover:text-blue-400 transition" href="#publications">Publications</a></li>
-            <li><a class="hover:text-blue-400 transition" href="#opportunities">Join Us</a></li>
-            <li><a class="hover:text-blue-400 transition" href="#contact">Contact</a></li>
+    <nav aria-label="Sections">
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#publications">Publications</a></li>
+            <li><a href="#group">Group</a></li>
+            <li><a href="#join">Join</a></li>
+            <li><a href="#contact">Contact</a></li>
         </ul>
     </nav>
 
-    <section class="py-16 bg-white" id="home">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-gray-800 mb-6">Welcome</h2>
-            <p class="text-lg text-gray-600 leading-relaxed max-w-8xl">Our research group develops mathematical and computational models to understand biological mechanisms, focusing on epigenetic and cellular dynamics. We are affiliated with the Biomathematics Group at Imperial College London's South Kensington campus.</p>
+    <div class="band">
+        <picture>
+            <source type="image/webp" srcset="images/hero-800.webp 800w, images/hero-1200.webp 1200w, images/hero-1600.webp 1600w" sizes="100vw">
+            <img src="images/hero-1200.jpg" alt="" width="1200" height="769" fetchpriority="high">
+        </picture>
+    </div>
 
-            <h3 class="text-2xl font-bold text-gray-700 mt-8 mb-4">What do we do?</h3>
-            <p class="text-lg text-gray-600 leading-relaxed max-w-8xl">Living systems operate in ways that are fundamentally different from human-made machines. A cell's most important decisions, such as when to divide or what type of cell to become, result from processes based on noisy interactions between many types of molecules. Our group develops new mathematical approaches to make sense of these processes. We use tools and concepts from a wide range of fields, including statistical physics, nonlinear dynamics, and computation, while working closely with experimental data.</p>
+    <main>
+    <h1 class="sr-only">Omer Karin's research group, Department of Mathematics, Imperial College London</h1>
+
+    <section id="about">
+        <div class="wrap">
+            <p class="lead">We develop mathematical models to understand biological mechanisms.</p>
+            <p>Living systems work very differently from human-made machines. A cell's most important decisions, such as when to divide or what type of cell to become, emerge from noisy interactions between many kinds of molecules. 
+                How does biological function arise from these interactions?
+                We believe answering this question requires new mathematical theory, which we build on ideas from statistical physics, nonlinear dynamics, computation and beyond. We analyse experimental data and collaborate closely with experimentalists to develop and test our models.</p>
         </div>
     </section>
 
-    <section class="py-16 bg-gray-100" id="research">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-gray-800 mb-6">Research</h2>
-            <div class="grid md:grid-cols-2 gap-8">
-                
-                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
-                    <img src="images/enhancernet.png" alt="Cell Identity Dynamics" class="w-full h-48 object-cover rounded-t-lg mb-4">
-                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Cell Identity Dynamics</h3>
-                    <p class="text-gray-600 leading-relaxed">The evolution of multicellular organisms depends on the differentiation of genetically identical cells into specialised types. We develop coarse-graining methods to model these dynamics and establish mechanistic links with associative memory networks, aiming to formulate a general theory of cell identity dynamics.</p>
-                    <div class="mt-4 space-y-2">
-                        <p><a href="https://journals.aps.org/prxlife/pdf/10.1103/dkmq-h4d9" class="text-blue-600 hover:underline">Mathematical framework for hierarchical cell identity control by collective enhancer dynamics</a></p>
-                        <p><a href="https://journals.biologists.com/dev/article/151/19/dev202997/362293/EnhancerNet-a-predictive-model-of-cell-identity" class="text-blue-600 hover:underline">EnhancerNet: a predictive model of cell identity dynamics through enhancer selection</a></p>
-                    </div>
-                </div>
+    <section id="publications">
+        <div class="wrap">
+            <h2>Publications</h2>
+            <p class="muted">Publications are also listed on my <a href="https://scholar.google.com/citations?hl=en&amp;user=dg7qorcAAAAJ&amp;view_op=list_works&amp;sortby=pubdate">Google Scholar page</a>. The coloured letters mark research themes.</p>
+            <!-- Research themes. To tag a publication, put the theme letters in its
+                 data-themes attribute, e.g. data-themes="M B". Letters and names are
+                 defined in this list; colours are set in the <style> block. -->
+            <ul class="theme-key" aria-label="Research themes">
+                <li data-k="M"><span class="tag">M</span>Systems Medicine</li>
+                <li data-k="B"><span class="tag">B</span>Biological Navigation</li>
+                <li data-k="I"><span class="tag">I</span>Immunology</li>
+                <li data-k="D"><span class="tag">D</span>Stem Cells and Development</li>
+                <li data-k="E"><span class="tag">E</span>Evolution</li>
+                <li data-k="N"><span class="tag">N</span>Neurobiology</li>
+                <li data-k="H"><span class="tag">H</span>Endocrinology</li>
+                <li data-k="G"><span class="tag">G</span>Epigenetics</li>
+                <li data-k="S"><span class="tag">S</span>Ageing</li>
+                <li data-k="L"><span class="tag">L</span>Learning in Biological Systems</li>
+                <li data-k="A"><span class="tag">A</span>Attractor Networks</li>
+                <li data-k="T"><span class="tag">T</span>Interacting Tipping Points</li>
+            </ul>
 
-                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
-                    <img src="images/epigenetics_website.png" alt="Memory" class="w-full h-48 object-cover rounded-t-lg mb-4">
-                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Interacting Tipping Points</h3>
-                    <p class="text-gray-600 leading-relaxed">Many biological systems, such as the adaptive immune system and epigenetic gene silencing, rely on long-term memory. We are developing theoretical approaches to study how the combination of stochastic production and competition between memory units shapes memory repertoires.</p>
-                    <div class="mt-4 space-y-2">
-                        <p><a href="https://journals.aps.org/prxlife/pdf/10.1103/l3gb-4zfx" class="text-blue-600 hover:underline">Learning principle for the adaptive shaping of epigenetic memory repertoires</a></p>
-                        <p><a href="https://www.embopress.org/doi/full/10.1038/s44320-025-00164-8" class="text-blue-600 hover:underline">Cell cycle criticality as a mechanism for robust cell population control</a></p>
-                        <p><a href="https://pubmed.ncbi.nlm.nih.gov/36657390" class="text-blue-600 hover:underline">Epigenetic inheritance of gene silencing is maintained by a self-tuning mechanism based on resource competition</a></p>
-                        <p><a href="https://www.cell.com/immunity/fulltext/S1074-7613(24)00081-5" class="text-blue-600 hover:underline">Tuning of plasma cell lifespan by competition explains the longevity and heterogeneity of antibody persistence</a></p>
-                    </div>
-                </div>
+        <h3 class="pub-year">2026</h3>
+        <ol class="pubs">
+          <li data-themes="I T G"><a href="https://doi.org/10.1103/gz26-8ryj">Compositional proofreading through critical self-tuning</a><span class="authors"><b>O Karin</b></span><span class="venue"><i>Physical Review Letters</i> (accepted)</span></li>
+          <li data-themes="T"><a href="https://doi.org/10.1103/4j35-6jxb">Self-organized hyperuniformity in a minimal model of population dynamics</a><span class="authors">T Agranov, N Wiegenfeld, <b>O Karin</b>, BD Simons</span><span class="venue"><i>Physical Review Letters</i></span></li>
+          <li data-themes="E"><a href="https://doi.org/10.1038/s41540-026-00758-4">Growth rate-dependent mutations and phenotypic switching facilitate rapid adaptation</a><span class="authors">A Grishechkin, <b>O Karin</b></span><span class="venue"><i>npj Systems Biology and Applications</i></span></li>
+          <li data-themes="I L T G"><a href="https://doi.org/10.1103/l3gb-4zfx">Learning principle for the adaptive shaping of epigenetic memory repertoires</a><span class="authors"><b>O Karin</b></span><span class="venue"><i>PRX Life</i></span></li>
+          <li data-themes="T D"><a href="https://doi.org/10.1038/s44320-025-00164-8">Cell cycle criticality as a mechanism for robust cell population control</a><span class="authors">BD Simons, <b>O Karin</b></span><span class="venue"><i>Molecular Systems Biology</i></span></li>
+        </ol>
+        <h3 class="pub-year">2025</h3>
+        <ol class="pubs">
+          <li data-themes="M H"><a href="https://doi.org/10.1038/s41467-025-65924-4">Unifying regulatory motifs in endocrine circuits</a><span class="authors">M Raz, DS Glass, T Milo, Y Korem Kohanim, <b>O Karin</b>, A Tendler, A Mayo, U Alon</span><span class="venue"><i>Nature Communications</i></span></li>
+          <li data-themes="D A"><a href="https://doi.org/10.1103/dkmq-h4d9">Mathematical framework for hierarchical cell identity control by collective enhancer dynamics</a><span class="authors">A Grishechkin, A Mukherjee, <b>O Karin</b></span><span class="venue"><i>PRX Life</i></span></li>
+          <li data-themes="M S"><a href="https://doi.org/10.59368/agingbio.20250042">Bridging physics and aging biology: insights from the first Physics in Aging Biology workshop</a><span class="authors">M Unfried, M Scheibye-Knudsen, U Alon, …, <b>O Karin</b>, …, A Zhavoronkov</span><span class="venue"><i>Aging Biology</i></span></li>
+        </ol>
+        <h3 class="pub-year">2024</h3>
+        <ol class="pubs">
+          <li data-themes="D A"><a href="https://doi.org/10.1242/dev.202997">EnhancerNet: a predictive model of cell identity dynamics through enhancer selection</a><span class="authors"><b>O Karin</b></span><span class="venue"><i>Development</i></span></li>
+          <li data-themes="I T"><a href="https://doi.org/10.1016/j.immuni.2024.02.005">Tuning of plasma cell lifespan by competition explains the longevity and heterogeneity of antibody persistence</a><span class="authors">BD Simons, <b>O Karin</b></span><span class="venue"><i>Immunity</i></span></li>
+        </ol>
+        <h3 class="pub-year">2023</h3>
+        <ol class="pubs">
+          <li data-themes="M N H"><a href="https://doi.org/10.1371/journal.pcbi.1011645">Major depressive disorder and bistability in an HPA-CNS toggle switch</a><span class="authors">B Ron Mizrachi, A Tendler, <b>O Karin</b>, T Milo, D Haran, A Mayo, U Alon</span><span class="venue"><i>PLOS Computational Biology</i></span></li>
+          <li data-themes=""><a href="https://doi.org/10.1063/5.0147231">Perspectives on adaptive dynamical systems</a><span class="authors">J Sawicki, R Berner, SAM Loos, …, <b>O Karin</b>, …, J Kurths</span><span class="venue"><i>Chaos</i></span></li>
+          <li data-themes="S"><a href="https://doi.org/10.1038/s41467-023-37930-x">Damage dynamics and the role of chance in the timing of <i>E. coli</i> cell death</a><span class="authors">Y Yang, <b>O Karin</b>, A Mayo, X Song, P Chen, AL Santos, AB Lindner, U Alon</span><span class="venue"><i>Nature Communications</i></span></li>
+          <li data-themes="M H"><a href="https://doi.org/10.1016/j.isci.2023.106047">Rules for body fat interventions based on an operating point mechanism</a><span class="authors">A Bar, <b>O Karin</b>, A Mayo, D Ben-Zvi, U Alon</span><span class="venue"><i>iScience</i></span></li>
+          <li data-themes="T G"><a href="https://doi.org/10.1016/j.cels.2022.12.003">Epigenetic inheritance of gene silencing is maintained by a self-tuning mechanism based on resource competition</a><span class="authors"><b>O Karin</b>, EA Miska, BD Simons</span><span class="venue"><i>Cell Systems</i></span></li>
+        </ol>
+        <h3 class="pub-year">2022</h3>
+        <ol class="pubs">
+          <li data-themes="M H"><a href="https://doi.org/10.15252/msb.202210919">Dynamics of thyroid diseases and thyroid-axis gland masses</a><span class="authors">Y Korem Kohanim, T Milo, M Raz, <b>O Karin</b>, A Bar, A Mayo, N Mendelson Cohen, Y Toledano, U Alon</span><span class="venue"><i>Molecular Systems Biology</i></span></li>
+          <li data-themes="B N L"><a href="https://doi.org/10.1371/journal.pcbi.1010340">The dopamine circuit as a reward-taxis navigation system</a><span class="authors"><b>O Karin</b>, U Alon</span><span class="venue"><i>PLOS Computational Biology</i></span></li>
+          <li data-themes="E"><a href="https://doi.org/10.1093/molbev/msab297">Controls for phylogeny and robust analysis in Pareto task inference</a><span class="authors">M Adler, A Tendler, J Hausser, Y Korem, P Szekely, N Bossel, Y Hart, <b>O Karin</b>, A Mayo, U Alon</span><span class="venue"><i>Molecular Biology and Evolution</i></span></li>
+        </ol>
+        <h3 class="pub-year">2021</h3>
+        <ol class="pubs">
+          <li data-themes="B L"><a href="https://doi.org/10.1016/j.isci.2021.102796">Temporal fluctuations in chemotaxis gain implement a simulated-tempering strategy for efficient navigation in complex environments</a><span class="authors"><b>O Karin</b>, U Alon</span><span class="venue"><i>iScience</i></span></li>
+          <li data-themes="M N H"><a href="https://doi.org/10.1016/j.isci.2021.102127">An opponent process for alcohol addiction based on changes in endocrine gland mass</a><span class="authors"><b>O Karin</b>, M Raz, U Alon</span><span class="venue"><i>iScience</i></span></li>
+          <li data-themes="M S"><a href="https://doi.org/10.1111/acel.13314">Senescent cells and the incidence of age-related diseases</a><span class="authors">I Katzir, M Adler, <b>O Karin</b>, N Mendelsohn-Cohen, A Mayo, U Alon</span><span class="venue"><i>Aging Cell</i></span></li>
+          <li data-themes="M H"><a href="https://doi.org/10.1073/pnas.2003926118">Hormone seasonality in medical records suggests circannual endocrine circuits</a><span class="authors">A Tendler, A Bar, N Mendelsohn-Cohen, <b>O Karin</b>, …, U Alon</span><span class="venue"><i>Proceedings of the National Academy of Sciences</i></span></li>
+          <li data-themes="M S"><a href="https://doi.org/10.1007/s11357-020-00286-x">Senescent cell accumulation mechanisms inferred from parabiosis</a><span class="authors"><b>O Karin</b>, U Alon</span><span class="venue"><i>GeroScience</i></span></li>
+        </ol>
+        <h3 class="pub-year">2020</h3>
+        <ol class="pubs">
+          <li data-themes="M H"><a href="https://doi.org/10.15252/msb.20209510">A new model for the HPA axis explains dysregulation of stress hormones on the timescale of weeks</a><span class="authors"><b>O Karin</b>, M Raz, A Tendler, A Bar, Y Korem Kohanim, T Milo, U Alon</span><span class="venue"><i>Molecular Systems Biology</i></span></li>
+          <li data-themes="M"><a href="https://doi.org/10.1101/2020.04.04.20053579">Adaptive cyclic exit strategies from lockdown to suppress COVID-19 and allow economic activity</a><span class="authors"><b>O Karin</b>, YM Bar-On, T Milo, …, U Alon</span><span class="venue">medRxiv (preprint)</span></li>
+        </ol>
+        <h3 class="pub-year">2019</h3>
+        <ol class="pubs">
+          <li data-themes="M S"><a href="https://doi.org/10.1038/s41467-019-13192-4">Senescent cell turnover slows with age providing an explanation for the Gompertz law</a><span class="authors"><b>O Karin</b>, A Agrawal, Z Porat, V Krizhanovsky, U Alon</span><span class="venue"><i>Nature Communications</i></span></li>
+        </ol>
+        <h3 class="pub-year">2017</h3>
+        <ol class="pubs">
+          <li data-themes="I"><a href="https://doi.org/10.1128/mBio.01612-17">Dynamic proteomics of herpes simplex virus infection</a><span class="authors">N Drayman, <b>O Karin</b>, A Mayo, T Danon, L Shapira, D Rafael, A Zimmer, A Bren, O Kobiler, U Alon</span><span class="venue"><i>mBio</i></span></li>
+          <li data-themes="M E"><a href="https://doi.org/10.15252/msb.20177599">Biphasic response as a mechanism against mutant takeover in tissue homeostasis circuits</a><span class="authors"><b>O Karin</b>, U Alon</span><span class="venue"><i>Molecular Systems Biology</i></span></li>
+        </ol>
+        <h3 class="pub-year">2016</h3>
+        <ol class="pubs">
+          <li data-themes="M H"><a href="https://doi.org/10.15252/msb.20167216">Dynamical compensation in physiological circuits</a><span class="authors"><b>O Karin</b>, A Swisa, B Glaser, Y Dor, U Alon</span><span class="venue"><i>Molecular Systems Biology</i></span></li>
+        </ol>
+        </div>
+    </section>
 
-                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
-                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Movement Regulation</h3>
-                    <img src="images/taxis.png" alt="Taxis" class="w-full h-48 object-cover rounded-t-lg mb-4">
-                    <p class="text-gray-600 leading-relaxed">We are interested in understanding the principles underlying biological circuits that control movement, drawing connections with reinforcement learning and sampling algorithms.</p>
-                    <div class="mt-4 space-y-2">
-                        <p><a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1010340" class="text-blue-600 hover:underline">The dopamine circuit as a reward-taxis navigation system.</a></p>
-                        <p><a href="https://www.cell.com/iscience/fulltext/S2589-0042(21)00718-X" class="text-blue-600 hover:underline">Temporal fluctuations in chemotaxis gain implement a simulated-tempering strategy for efficient navigation in complex environments.</a></p>
-                    </div>
+    <section id="group">
+        <div class="wrap">
+            <h2>Group</h2>
+            <div class="people">
+                <div class="person">
+                    <img class="avatar" src="images/people/omer.jpg" alt="Omer Karin" width="180" height="180" loading="lazy" decoding="async">
+                    <h3>Omer Karin</h3>
+                    <p>PI, Associate Professor of Biomathematics</p>
                 </div>
-
-                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
-                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Systems Medicine and Ageing</h3>
-                    <img src="images/vaccine.png" alt="Systems Medicine" class="w-full h-48 object-cover rounded-t-lg mb-4">
-                    <p class="text-gray-600 leading-relaxed">We develop mathematical models of physiological circuits to understand how diseases arise from the dysregulation of dynamical mechanisms over long timescales, including models for biological ageing.</p>
-                    <div class="mt-4 space-y-2">
-                        <p><a href="https://www.cell.com/immunity/fulltext/S1074-7613(24)00081-5" class="text-blue-600 hover:underline">Tuning of plasma cell lifespan by competition explains the longevity and heterogeneity of antibody persistence</a></p>
-                        <p><a href="https://www.embopress.org/doi/full/10.15252/msb.20209510" class="text-blue-600 hover:underline">A new model for the HPA axis explains dysregulation of stress hormones on the timescale of weeks.</a></p>
-                        <p><a href="https://www.nature.com/articles/s41467-019-13192-4" class="text-blue-600 hover:underline">Senescent cell turnover slows with age providing an explanation for the Gompertz law.</a></p>
-                        <p><a href="https://onlinelibrary.wiley.com/doi/full/10.1111/acel.13314" class="text-blue-600 hover:underline">Senescent cells and the incidence of age-related diseases.</a></p>
-                    </div>
+                <div class="person">
+                    <img class="avatar" src="images/people/becky.jpg" alt="Becky Morgan" width="320" height="320" loading="lazy" decoding="async">
+                    <h3>Becky Morgan</h3>
+                    <p>PhD Student</p>
                 </div>
+                <div class="person">
+                    <img class="avatar" src="images/people/matias.jpg" alt="Matias Palumbo" width="320" height="320" loading="lazy" decoding="async">
+                    <h3>Matias Palumbo</h3>
+                    <p>PhD Student (co-supervised with Vicki Metzis)</p>
+                </div>
+                <div class="person">
+                    <div class="avatar" aria-hidden="true">LS</div>
+                    <h3>Lanya Sabah</h3>
+                    <p>PhD Student (co-supervised with J Krishnan)</p>
+                </div>
+            </div>
 
+            <h3>Alumni</h3>
+            <ul class="alumni">
+                <li><img src="images/people/anton.jpg" alt="" width="320" height="320" loading="lazy" decoding="async"><div><strong>Anton Grishechkin</strong> <span>· PhD Student</span></div></li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="join">
+        <div class="wrap">
+            <h2>Join the group</h2>
+            
+            <h3>Postdoctoral researchers</h3>
+            <h4><a href="https://www.imperial.ac.uk/jobs/search-jobs/description/index.php?jobId=29181">Chapman Fellowship in Applied Mathematics</a></h4>
+            <p>A 3-year independent postdoctoral fellowship in the Department of Mathematics, starting September 2027. Closes 29 October 2026. <a href="https://www.imperial.ac.uk/mathematics/research/opportunities/chapman-fellowships/">About the Chapman Fellowships</a>.</p>
+            <p>I am also happy to support applications for external fellowships, such as the <a href="https://www.embo.org/funding/fellowships-grants-and-career-support/postdoctoral-fellowships/application/">EMBO Postdoctoral Fellowships</a> (open year-round; next cutoff 22 January 2027), Marie Skłodowska-Curie and HFSP. Please get in touch to discuss potential projects.</p>
+
+            <h3>PhD students</h3>
+            <p>Competitive funding is available for PhD positions starting in 2027. If you're thinking about joining my group, it's a good idea to reach out early. Please <a href="#contact">contact me</a> with your CV and a short summary of your interests to chat about possible projects.</p>
+            <p>Applications to the <a href="https://www.imperial.ac.uk/natural-sciences/departments/mathematics/postgraduate/doctoral-programme/prospective-students/information-for-an-application-to-mathematics-research-phd/">Mathematics PhD programme</a> open in October. Applicants who apply by 2 November 2026 are considered in the first round of the <a href="https://www.imperial.ac.uk/study/fees-and-funding/postgraduate-doctoral/grants-scholarships/presidents-phd/">President's PhD Scholarships</a>.</p>
+
+            <h3>Undergraduate and Masters students</h3>
+            <p>I welcome applications from Imperial students for M3R, M4R, MSc, and UROP research projects. If you are interested, please <a href="#contact">get in touch</a> to discuss potential opportunities.</p>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="wrap">
+            <h2>Contact</h2>
+            <p class="muted">My group is based in the Department of Mathematics, Imperial College London, UK.</p>
+            <div class="contact">
+                <div>
+                    <h3>Location</h3>
+                    <p>6M12 Huxley Building<br>South Kensington Campus<br>London SW7 2AZ, UK</p>
+                    <h3>Email</h3>
+                    <p>o.karin [at] imperial.ac.uk</p>
+                </div>
+                <div>
+                    <iframe class="map" title="Map of the Huxley Building, Imperial College London" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen src="https://maps.google.com/maps?q=Huxley%20Building,%20Imperial%20College%20London&amp;t=&amp;z=15&amp;ie=UTF-8&amp;iwloc=&amp;output=embed"></iframe>
+                </div>
             </div>
         </div>
     </section>
+    </main>
 
-    <section class="py-16 bg-white" id="group">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-gray-800 mb-6">Our Group</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                
-                <div class="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition text-center">
-                    <img alt="Omer Karin" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover" src="images/photo_OK.jpg"/>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Omer Karin</h3>
-                    <p class="text-gray-600 mb-3">Associate Professor</p>
-                </div>
+    <footer>© 2026 Omer Karin · Hosted on GitHub Pages</footer>
 
-                <div class="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition text-center">
-                    <img alt="Anton Grishechkin" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover" src="images/anton.jpg"/>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Anton Grishechkin</h3>
-                    <p class="text-gray-600 mb-3">PhD Student</p>
-                </div>
-
-                <div class="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition text-center">
-                    <img alt="Becky Morgan" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover" src="images/becky.jpg"/>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Becky Morgan</h3>
-                    <p class="text-gray-600 mb-3">PhD Student</p>
-                </div>
-
-                <div class="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition text-center">
-                    <img alt="Matias Palumbo" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover" src="images/matias.jpg"/>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Matias Palumbo</h3>
-                    <p class="text-gray-600 mb-3">PhD Student (co-sup. Vicki Metzis)</p>
-                </div>
-
-                <div class="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition text-center">
-                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Lanya Sabah</h3>
-                    <p class="text-gray-600 mb-3">PhD Student (co-sup. J Krishnan)</p>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <section class="py-16 bg-white" id="publications">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-gray-800 mb-6">Publications</h2>
-            <p class="text-lg text-gray-600">A comprehensive list of our publications is available on <a class="text-blue-600 hover:underline" href="https://scholar.google.com/citations?hl=en&user=dg7qorcAAAAJ&view_op=list_works&sortby=pubdate">Omer's Google Scholar page</a>.</p>
-        </div>
-    </section>
-
-    <section class="py-16 bg-gray-100" id="opportunities">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-gray-800 mb-6">Join Us</h2>
-            <p class="text-lg text-gray-600 mb-8">We are always looking for motivated individuals to join our team. Several funding mechanisms are available.</p>
-            <div class="grid md:grid-cols-2 gap-8">
-                
-                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
-                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Postdoctoral Researchers</h3>
-                    <p class="text-gray-600 leading-relaxed">The college offers several open positions for postdoctoral fellowships. Below is a list of opportunities. Please follow the provided links for official deadlines and application information.</p>
-
-                    <p class="mt-4"><a href="https://www.imperial.ac.uk/mathematics/research/opportunities/chapman-fellowships/" class="text-blue-600 hover:underline font-semibold">Chapman Fellowships</a></p>
-                    <p class="text-gray-600 leading-relaxed">A 2-year independent fellowship with teaching duties. Applications typically open annually around September.</p>
-
-                    <p class="mt-4 font-semibold">Chapman-Schmidt AI in Science Postdoctoral Fellows</p>
-                    <p class="text-gray-600 leading-relaxed">A 2-year fellowship for researchers applying AI to science. Links:
-                        <a href="https://www.imperial.ac.uk/jobs//search-internal/description/index.php?jobId=24768&jobTitle=Chapman-Schmidt+AI+in+Science+Postdoctoral+Fellows%2C+a+program+of+Schmidt+Sciences+%28Research+Associate%29" class="text-blue-600 hover:underline">Associate</a> |
-                        <a href="https://www.imperial.ac.uk/jobs//search-internal/description/index.php?jobId=24772&jobTitle=Chapman-Schmidt+AI+in+Science+Postdoctoral+Fellows%2C+a+program+of+Schmidt+Sciences+%28Research+Fellow%29" class="text-blue-600 hover:underline">Fellow</a>.
-                    </p>
-
-                    <p class="mt-4 font-semibold">Eric and Wendy Schmidt AI in Science Postdoctoral Fellows</p>
-                    <p class="text-gray-600 leading-relaxed">A 2-year fellowship to use AI for advancing science or engineering. Links:
-                        <a href="https://www.imperial.ac.uk/jobs//search-internal/description/index.php?jobId=24779&jobTitle=Eric+and+Wendy+Schmidt+AI+in+Science+Postdoctoral+Fellows%2C+a+program+of+Schmidt+Sciences+%281+Year+Linked+Fellowship+with+AIMS+South+Africa%29+" class="text-blue-600 hover:underline">Associate</a> |
-                        <a href="https://www.imperial.ac.uk/jobs//search-internal/description/index.php?jobId=24772&jobTitle=Chapman-Schmidt+AI+in+Science+Postdoctoral+Fellows%2C+a+program+of+Schmidt+Sciences+%28Research+Fellow%29" class="text-blue-600 hover:underline">Fellow</a>.
-                    </p>
-
-                    <p class="mt-4"><a href="https://www.imperial.ac.uk/jobs//search-internal/description/index.php?jobId=24779&jobTitle=Eric+and+Wendy+Schmidt+AI+in+Science+Postdoctoral+Fellows%2C+a+program+of+Schmidt+Sciences+%281+Year+Linked+Fellowship+with+AIMS+South+Africa%29+" class="text-blue-600 hover:underline font-semibold">Eric and Wendy Schmidt AI in Science Fellowship (Linked with AIMS South Africa)</a></p>
-                    <p class="text-gray-600 leading-relaxed">A 1-year fellowship at Imperial College with a linked 1-year appointment at AIMS South Africa.</p>
-
-                    <p class="text-gray-600 leading-relaxed mt-4">I am also happy to support candidates in their applications for external fellowships, such as Marie Curie, EMBO, and HFSP. Please get in touch to discuss potential projects.</p>
-                </div>
-                
-                <div class="space-y-8">
-                    <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
-                        <h3 class="text-xl font-semibold text-gray-800 mb-3">PhD Students</h3>
-                        <p class="text-gray-600 leading-relaxed">We have competitive funding for PhD positions. If you're thinking about joining us, it's a good idea to reach out early. Please <a href="#contact" class="text-blue-600 hover:underline">contact me</a> with your CV and a short summary of your interests to chat about possible projects.</p>
-                    </div>
-                    <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
-                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Undergraduate/Masters Students</h3>
-                        <p class="text-gray-600 leading-relaxed">We welcome applications from Imperial students for M3R, M4R, MSc, and UROP research projects. If you are interested in joining us, please <a href="#contact" class="text-blue-600 hover:underline">get in touch</a> to discuss potential opportunities.</p>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <section class="py-16 bg-white" id="contact">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-gray-800 mb-6">Contact Us</h2>
-            <p class="text-lg text-gray-600 mb-8">Our group is located at the Department of Mathematics, Imperial College London, UK.</p>
-            <div class="grid md:grid-cols-2 gap-8">
-                
-                <div class="bg-gray-50 p-6 rounded-lg shadow-md">
-                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Our Location</h3>
-                    <div class="space-y-2 text-gray-600">
-                        <p>6M12 Huxley Building</p>
-                        <p>South Kensington Campus</p>
-                        <p>London SW7 2AZ, UK</p>
-                    </div>
-                    <div class="mt-4">
-                        <p class="text-gray-800 font-medium">Email:</p>
-                        <p class="text-gray-600">o.karin [at] imperial.ac.uk</p>
-                    </div>
-                </div>
-
-                <div class="bg-gray-50 p-6 rounded-lg shadow-md">
-                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Find Us</h3>
-                    <div class="map-container">
-                        <iframe allowfullscreen="" height="200" loading="lazy" src="https://maps.google.com/maps?q=Huxley%20Building,%20Imperial%20College%20London&t=&z=15&ie=UTF-8&iwloc=&output=embed" style="border:0;" width="100%"></iframe>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <footer class="bg-gray-800 text-white text-center py-6">
-        <p class="text-gray-300">© 2026 Computation in Living Systems | Hosted on GitHub Pages</p>
-    </footer>
-
+    <script>
+        // Adds theme superscripts to publications from their data-themes letters.
+        (function () {
+            var names = {}, order = [];
+            document.querySelectorAll('.theme-key li').forEach(function (li) {
+                names[li.dataset.k] = li.textContent.slice(li.dataset.k.length).trim();
+                order.push(li.dataset.k);
+            });
+            document.querySelectorAll('.pubs li[data-themes]').forEach(function (li) {
+                var keys = li.dataset.themes.split(/\s+/).filter(function (k) { return names[k]; })
+                    .sort(function (a, b) { return order.indexOf(a) - order.indexOf(b); });
+                if (!keys.length) return;
+                var sup = document.createElement('sup');
+                sup.className = 'tags';
+                keys.forEach(function (k) {
+                    var tag = document.createElement('span');
+                    tag.className = 'tag';
+                    tag.dataset.k = k;
+                    tag.title = names[k];
+                    tag.setAttribute('aria-label', names[k]);
+                    tag.textContent = k;
+                    sup.appendChild(tag);
+                });
+                li.firstElementChild.after(sup);
+            });
+        })();
+    </script>
 </body>
 </html>
